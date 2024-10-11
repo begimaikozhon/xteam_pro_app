@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mockito/mockito.dart';
 import 'package:xteam_pro_app/bloc/authentication_bloc.dart';
 import 'package:xteam_pro_app/bloc/map_bloc.dart';
 import 'package:xteam_pro_app/pages/splash_screen.dart';
@@ -17,7 +18,8 @@ const FirebaseOptions firebaseOptions = FirebaseOptions(
   appId: "1:605447539631:web:03fd9a33bc2756bb027d5a",
   measurementId: "G-9K8LZ5S5CH",
 );
-
+class MockFirebaseAuth extends Mock implements FirebaseAuth {}
+class MockUserCredential extends Mock implements UserCredential {}
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
