@@ -14,12 +14,16 @@ class WeatherModel {
   });
 
   factory WeatherModel.fromJson(Map<String, dynamic> json) {
-    return WeatherModel(
-      temperature: json['main']['temp'].toDouble(),
-      description: json['weather'][0]['description'],
-      humidity: json['main']['humidity'].toDouble(),
-      windSpeed: json['wind']['speed'].toDouble(),
-      location: json['name'],
-    );
+    try {
+      return WeatherModel(
+        temperature: json['main']['temp'].toDouble(),
+        description: json['weather'][0]['description'] ?? 'Нет данных',
+        humidity: json['main']['humidity'].toDouble(),
+        windSpeed: json['wind']['speed'].toDouble(),
+        location: json['name'] ?? 'Неизвестное местоположение',
+      );
+    } catch (e) {
+      throw Exception('Ошибка при парсинге данных о погоде: $e');
+    }
   }
 }

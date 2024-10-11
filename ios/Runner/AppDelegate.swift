@@ -9,7 +9,7 @@ import GoogleMaps // Импортируем Google Maps
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     // Устанавливаем API ключ для Google Maps
-    GMSServices.provideAPIKey("AIzaSyDqFg19lNi7v-whRchS233WrBHTAC7aqvQ")
+    GMSServices.provideAPIKey("AIzaSyAdvFE9rktIMVBOAA766GhtCuQ7bW1S3ec")
     
     // Регистрируем плагины
     GeneratedPluginRegistrant.register(with: self)

@@ -1,17 +1,16 @@
-// ignore_for_file: deprecated_member_use, use_build_context_synchronously
+// ignore_for_file: library_private_types_in_public_api, deprecated_member_use, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:xteam_pro_app/bloc/weather_bloc.dart';
-import 'package:xteam_pro_app/models/weather_model.dart';
-import 'map_page.dart';
+import 'package:geolocator/geolocator.dart'; // Импортируем пакет для работы с геолокацией.
+import 'package:xteam_pro_app/bloc/weather_bloc.dart'; // Импортируем BLoC для погоды.
+import 'package:xteam_pro_app/models/weather_model.dart'; // Импортируем модель погоды.
+import 'map_page.dart'; // Импортируем страницу карты.
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
@@ -19,24 +18,25 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation(); // Получаем текущее местоположение при инициализации
+    _getCurrentLocation(); // Получаем текущее местоположение при инициализации.
   }
 
   Future<void> _getCurrentLocation() async {
-    // Запрашиваем разрешение на доступ к местоположению
+    // Запрашиваем разрешение на доступ к местоположению.
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission != LocationPermission.whileInUse &&
           permission != LocationPermission.always) {
-        return; // Если разрешение не предоставлено, выходим
+        return; // Если разрешение не предоставлено, выходим.
       }
     }
 
-    // Получаем текущее местоположение
+    // Получаем текущее местоположение.
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    // Отправляем событие для получения погоды
+
+    // Отправляем событие для получения погоды.
     context
         .read<WeatherBloc>()
         .add(FetchWeather(position.latitude, position.longitude));
@@ -47,17 +47,17 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Stack(
         children: [
-          // Фоновое изображение
+          // Фоновое изображение.
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                    'assets/DALL·E 2024-10-04 22.45.01 - A stunning and original landscape of Kyrgyzstan, showcasing the majestic Tian Shan mountains, lush green valleys, and traditional yurts. The scene inc.webp'), // Убедитесь, что путь правильный
+                    'assets/DALL·E 2024-10-04 22.45.01 - A stunning and original landscape of Kyrgyzstan, showcasing the majestic Tian Shan mountains, lush green valleys, and traditional yurts. The scene inc.webp'),
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          // Контент на фоне
+          // Контент на фоне.
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          // Иконка для открытия страницы Google Maps в правом верхнем углу
+          // Иконка для открытия страницы Google Maps в правом верхнем углу.
           Positioned(
             top: 30,
             right: 10,
@@ -123,8 +123,9 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-              'Погода в ${weatherData.location}', // Отображаем название местоположения
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              'Погода в ${weatherData.location}', // Отображаем название местоположения.
+              style:
+                  const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
           Text('Температура: ${weatherData.temperature}°C'),
           Text('Влажность: ${weatherData.humidity}%'),
