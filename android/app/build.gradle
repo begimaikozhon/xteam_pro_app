@@ -1,0 +1,55 @@
+plugins {
+    id "com.android.application"
+    id 'com.google.gms.google-services' // Плагин для Firebase
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+    id "com.google.android.libraries.mapsplatform.secrets-gradle-plugin" // Плагин для API-ключей
+}
+
+android {
+    namespace = "com.example.xteam_pro_app"
+    compileSdkVersion 34 // Установите актуальную версию SDK
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    defaultConfig {
+        applicationId "com.example.xteam_pro_app"
+        minSdkVersion 23  // Установите минимальную версию SDK на 23
+        targetSdkVersion 34  // Установите целевую версию SDK
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.debug
+        }
+    }
+
+    // Добавление секции secrets
+    secrets {
+        propertiesFileName = "secrets.properties"  // Имя файла с секретами
+        defaultPropertiesFileName = "local.defaults.properties"  // Имя файла с дефолтными значениями
+        ignoreList.add("keyToIgnore") // Игнорируем ключ "keyToIgnore"
+        ignoreList.add("sdk.*")       // Игнорируем все ключи, которые соответствуют регулярному выражению "sdk.*"
+    }
+}
+
+flutter {
+    source = "../.."
+}
+
+dependencies {
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
+    implementation platform('com.google.firebase:firebase-bom:31.1.0') // Firebase BOM для синхронизации версий
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-firestore'
+}
